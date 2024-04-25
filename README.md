@@ -44,6 +44,8 @@ cd backend
 npm install
 npm start
 ```
+-
+    <em>Note: if "SQLITE_CANTOPEN: unable to open database file" error occours then create a file named blog.db in the backend folder</em>
 
 ### Setup and run frontend
 
