@@ -1,83 +1,25 @@
-import React, { useState, useEffect } from "react";
-import "./App.css"; // Import optional stylesheet
-import BlogPostList from "./components/BlogPostList";
-import CreatePostForm from "./components/CreatePostForm";
-import EditPostForm from "./components/EditPostForm";
-import SinglePost from "./components/SinglePost"; // Optional component
-import axios from "axios"; // Import axios for HTTP requests
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import BlogList from "./components/BlogList";
+import BlogDetails from "./components/BlogDetails";
+import BlogForm from "./components/BlogForm";
+import "./App.css";
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [selectedPostId, setSelectedPostId] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/posts"); // Replace with your backend URL
-      setPosts(response.data);
-    };
-    fetchData();
-  }, []);
-
-  // CRUD operations using Axios and state management
-  const handlePostCreate = async (newPost) => {
-    try {
-      const response = await axios.post("http://localhost:3000/posts", newPost);
-      setPosts([...posts, response.data]); // Add new post to state
-      setSelectedPostId(null); // Clear selected post ID
-    } catch (error) {
-      console.error("Error creating post:", error);
-    }
-  };
-
-  const handlePostUpdate = async (updatedPost) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/posts/${updatedPost.id}`,
-        updatedPost
-      );
-      const updatedPosts = posts.map((post) =>
-        post.id === updatedPost.id ? updatedPost : post
-      );
-      setPosts(updatedPosts);
-      setSelectedPostId(null); // Clear selected post ID
-    } catch (error) {
-      console.error("Error updating post:", error);
-    }
-  };
-
-  const handlePostDelete = async (postId) => {
-    try {
-      await axios.delete(`http://localhost:3000/posts/${postId}`);
-      const remainingPosts = posts.filter((post) => post.id !== postId);
-      setPosts(remainingPosts);
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    }
-  };
-
-  const handlePostSelection = (postId) => {
-    setSelectedPostId(postId);
-  };
-
   return (
-    <div className="App">
-      <h1>Blog Posts</h1>
-      <BlogPostList
-        posts={posts}
-        onPostSelect={handlePostSelection}
-        onPostDelete={handlePostDelete}
-      />
-      {selectedPostId && <SinglePost postId={selectedPostId} />}{" "}
-      {/* Optional for single post view */}
-      {selectedPostId ? (
-        <EditPostForm
-          post={posts.find((post) => post.id === selectedPostId)}
-          onPostUpdate={handlePostUpdate}
-        />
-      ) : (
-        <CreatePostForm onPostCreate={handlePostCreate} />
-      )}
-    </div>
+    <Router>
+      <div className="App">
+        <a href="/" className="mainHeader">
+          BlogWebsite
+        </a>
+        <Routes>
+          <Route path="/" element={<BlogList />} />
+          <Route path="/posts/:id" element={<BlogDetails />} />
+          <Route path="/new" element={<BlogForm />} />
+          <Route path="/edit/:id" element={<BlogForm />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

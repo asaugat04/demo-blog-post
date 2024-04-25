@@ -2,7 +2,7 @@ const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 6969;
 
 // Connect to SQLite database
 const db = new sqlite3.Database("./blog.db", sqlite3.OPEN_READWRITE, (err) => {

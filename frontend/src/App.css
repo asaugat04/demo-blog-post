@@ -1,13 +1,121 @@
-.App {
-  font-family: sans-serif;
+body {
+  font-family: Arial, sans-serif;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 3px;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+h1 {
   text-align: center;
 }
-
-ul {
-  list-style: none;
-  padding: 0;
+.mainHeader {
+  display: block;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 0;
+  height: 2em;
+  padding-top: 10px;
+  background-color: #acacac;
+  color: #fff;
+  text-decoration: none;
+}
+.newPost {
+  display: block;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: auto;
+  padding-top: 10px;
+  border: 1px solid #000;
+  padding: 10px;
+  border-radius: 5px;
+  width: fit-content;
+  color: #000;
+  text-decoration: none;
+  background-color: lightblue;
+}
+.newPost:hover {
+  background-color: lightgreen;
 }
 
-li {
-  margin: 10px 0;
+.blogItems {
+  background-color: #acacac;
+  padding: 20px;
+  list-style-type: none;
+  /* display: flex;
+  flex-direction: column; */
+
+  li {
+    color: #000;
+    margin: 10px;
+    background-color: lightblue;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+  }
+}
+.mainContainer {
+  height: 100%;
+  background-color: #ccc;
+  padding: 30px;
+  h1 {
+    text-align: left;
+  }
+  p {
+    background-color: #515151;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    letter-spacing: 0.03em;
+    line-height: 1.5em;
+  }
+  a {
+    text-decoration: none;
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 6px;
+  }
+  input,
+  textarea {
+    padding: 15px;
+    background-color: #515151;
+    color: white;
+    font-size: 1.2em;
+  }
 }
