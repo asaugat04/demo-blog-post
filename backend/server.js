@@ -15,7 +15,10 @@ const db = new sqlite3.Database("./blog.db", sqlite3.OPEN_READWRITE, (err) => {
 
 // Initialize the database (create table if it doesn't exist)
 db.run(
-  "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
+  "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,comment TEXT)"
+);
+db.run(
+  "CREATE TABLE IF NOT EXISTS comments (id INTEGER PRIMARY KEY AUTOINCREMENT,post_id INTEGER NOT NULL , content TEXT NOT NULL, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY (post_id) REFERENCES posts(id) )"
 );
 
 // Define a simple blog post model using a regular function as a constructor
@@ -41,7 +44,7 @@ app.get("/posts", (req, res) => {
 // API endpoint to get a single blog post
 app.get("/posts/:id", (req, res) => {
   const id = req.params.id;
-  db.get("SELECT * FROM posts WHERE id = ?", [id], (err, row) => {
+  db.get("SELECT * FROM comments WHERE id = ?", [id], (err, row) => {
     if (err) {
       res.status(404).json({ message: "Post not found" });
     } else {
@@ -49,7 +52,23 @@ app.get("/posts/:id", (req, res) => {
     }
   });
 });
-
+//add a endpoint for comment
+app.post("/posts/comment/:id", (req, res) => {
+  const { comment } = req.body;
+  console.log(comment);
+  const id = req.params.id;
+  db.run(
+    "INSERT INTO comments(post_id,content) VALUES (?,?)",
+    [id, comment],
+    (err) => {
+      if (err) {
+        res.status(500).json({ message: "Error updating post" });
+      } else {
+        res.json({ message: "Post updated successfully" });
+      }
+    }
+  );
+});
 // API endpoint to create a new blog post
 app.post("/posts", (req, res) => {
   const { title, content } = req.body;
